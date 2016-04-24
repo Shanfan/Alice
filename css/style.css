@@ -1,5 +1,9 @@
-
 .content {
   margin: auto;
   max-width: 1000px;
 }
+
+svg {
+  margin: 50px;
+}
+
