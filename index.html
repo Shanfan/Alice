@@ -11,7 +11,44 @@
   </div>
 
   <script type="text/javascript" src="vendor/d3.js" charset="utf-8"></script>
-  <script src="src/utils.js" type="text/javascript"></script>
-  <script src="src/main.js" type="text/javascript"></script>
+  <!-- <script src="src/utils.js" type="text/javascript"></script> -->
+  <!-- <script src="src/main.js" type="text/javascript"></script> -->
+  <script>
+
+d3.csv('../data/alice.csv', function(data) {
+
+   var values = data.map( function(d) {
+     return +d.len;
+   });
+
+    var data = [3, 5, 6, 8, 10, 3, 5, 10, 12, 13, 21, 2, 34, 2, 67];
+    var w = 900,
+        h = 900,
+        unit = 20;
+
+    var svg = d3.select('#vis').append('svg')
+                                .attr('width', w)
+                                .attr('height', h);
+    var min = d3.min(values);
+    var max = d3.max(values);
+    
+    var scale = d3.scale.linear();
+    scale.domain([min, max]);
+    scale.range([0,1]);
+
+    console.log(min,max);
+    
+    svg.selectAll('rect')
+      .data(values).enter()
+      .append('rect')
+      .attr({'x': function(d, i){ return i*unit;},
+             'y': 10,
+             'width': unit,
+             'height': unit})
+      .attr('fill', function(d){ return d3.hsl(55, 1, scale(d));});
+});
+
+
+  </script>
 </body>
 </html>
