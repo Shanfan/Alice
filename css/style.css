@@ -1,9 +1,22 @@
+* {
+  box-sizing: border-box;
+  transition: all 0.5s;
+}
+h1 {
+  text-align: center;
+}
 .content {
-  margin: auto;
-  max-width: 1000px;
+  background: #222;
+  display: flex;
+  justify-content: center;
 }
 
 svg {
   margin: 50px;
+}
+
+rect:hover {
+  fill: white;
+  cursor: pointer;
 }
 

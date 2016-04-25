@@ -1,54 +1,49 @@
 <html>
   <head>
-    <title>Text Vis Starter Kit</title>
+    <title>Alice In Wonderland Vis</title>
     <link rel="stylesheet" type="text/css" href="css/normalize.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
 <body>
-
+  <h1>Alice In Wonderland</h1>
   <div class="content">
     <div id="vis"></div>
   </div>
 
   <script type="text/javascript" src="vendor/d3.js" charset="utf-8"></script>
-  <!-- <script src="src/utils.js" type="text/javascript"></script> -->
-  <!-- <script src="src/main.js" type="text/javascript"></script> -->
   <script>
 
-d3.csv('../data/alice.csv', function(data) {
+d3.csv('data/alice.csv', function(data) {
 
     var values = data.map( function(d) {
         return +d.len;
     });
 
-    var w = 900,
-        h = 900,
-        unit = 10;
+    var unit = 10;
+    var x_num = Math.floor(Math.sqrt(values.length)),
+        y_num = x_num + 1;
 
-    var svg = d3.select('#vis').append('svg')
-                                .attr('width', w)
-                                .attr('height', h);
+    console.log(x_num, y_num);
+
+    var vis = d3.select('#vis').append('svg').attr({'height': y_num * unit,
+                                                    'width': x_num * unit });
     var min = d3.min(values);
     var max = d3.max(values);
-
-    var numInRow = Math.floor(Math.sqrt(values.length));
     
     var scale = d3.scale.log();
     scale.domain([min, max]);
-    scale.range(['#172D2C', '#C8E9A0']);
-
-    console.log(min,max);
+    scale.range(['#C8E9A0', '#172D2C']);
     
-    svg.selectAll('rect')
+    vis.selectAll('rect')
       .data(values).enter()
       .append('rect')
       .attr({
-            'x': function(d,i) { return (i%numInRow) * unit;},
-            'y': function(d,i) { return Math.floor(i/numInRow) * unit;},
+            'x': function(d,i) { return (i%x_num) * unit;},
+            'y': function(d,i) { return Math.floor(i/x_num) * unit;},
             'width': unit,
-            'height': unit
-          })
-      .attr('fill', function(d){ return scale(d);});
+            'height': unit,
+            'fill': function(d){ return scale(d);}
+          });
 });
 
 
