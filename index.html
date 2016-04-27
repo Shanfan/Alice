@@ -16,6 +16,25 @@
 
 d3.csv('data/alice.csv', function(data) {
 
+    //level of aggregation
+    var aggregation = 1;
+
+    //do aggregation
+    data = data.reduce(function(prev, curr, currIndex, arr) {
+      
+      var arrayIndex = Math.floor( currIndex / aggregation );
+
+      // do we already have item for this agregation?
+      if(!prev[arrayIndex]) {
+        prev[arrayIndex] = {sentence: "", len: 0};
+      }
+
+      prev[arrayIndex].sentence += curr.sentence;
+      prev[arrayIndex].len += curr.len;
+
+      return prev;
+    }, []);
+
     var unit = 15;
     var x_num = Math.floor(Math.sqrt(data.length)),
         y_num = x_num + 1;
