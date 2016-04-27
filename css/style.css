@@ -1,6 +1,5 @@
 * {
   box-sizing: border-box;
-  transition: all 0.5s;
 }
 h1 {
   text-align: center;
@@ -22,3 +21,25 @@ rect:hover {
   cursor: pointer;
 }
 
+.tooltip {
+  position: absolute;
+  display: none;
+  pointer-events: none;
+  max-width: 400px;
+  padding: 5px 10px;
+  color: white;
+  background-color: black;
+}
+  .tooltip.displayed {
+    display: block;
+  }
+  .tooltip::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    transform: translate(0,-50% );
+    left: -6px;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-right: 6px solid black;
+  }

@@ -9,41 +9,61 @@
   <div class="content">
     <div id="vis"></div>
   </div>
+  <div class="tooltip"></div>
 
   <script type="text/javascript" src="vendor/d3.js" charset="utf-8"></script>
   <script>
 
 d3.csv('data/alice.csv', function(data) {
 
-    var values = data.map( function(d) {
-        return +d.len;
-    });
-
     var unit = 15;
-    var x_num = Math.floor(Math.sqrt(values.length)),
+    var x_num = Math.floor(Math.sqrt(data.length)),
         y_num = x_num + 1;
-
-    console.log(x_num, y_num);
 
     var vis = d3.select('#vis').append('svg').attr({'height': y_num * unit,
                                                     'width': x_num * unit });
-    var min = d3.min(values);
-    var max = d3.max(values);
+    var min = d3.min(data, function(d) { return +d.len; });
+    var max = d3.max(data, function(d) { return +d.len; });
     
+    var tooltip = d3.select(".tooltip");
+
     var scale = d3.scale.log();
     scale.domain([min, max]);
     scale.range(['#C8E9A0', '#172D2C']);
     
     vis.selectAll('rect')
-      .data(values).enter()
+      .data(data).enter()
       .append('rect')
       .attr({
             'x': function(d,i) { return (i%x_num) * unit;},
             'y': function(d,i) { return Math.floor(i/x_num) * unit;},
             'width': unit,
             'height': unit,
-            'fill': function(d){ return scale(d);}
-          });
+            'fill': function(d){ return scale(+d.len);}
+          })
+      .on("mouseover", function(d) {
+        tooltip.text(d.sentence);
+        tooltip.classed('displayed', true);
+        
+        var boundingRect = this.getBoundingClientRect();
+        var x = boundingRect.right;
+        var y = (boundingRect.top + boundingRect.bottom) / 2;
+        
+        x += 15;
+        y -= tooltip.node().getBoundingClientRect().height/2; // center it
+
+        //  add possible scroll of the page
+        x += window.pageXOffset;
+        y += window.pageYOffset;
+
+        tooltip.style({
+          "left": x + "px",
+          "top": y + "px"
+        });
+      })
+      .on("mouseout", function(d) {
+        tooltip.classed('displayed', true);
+      });
 });
 
 
