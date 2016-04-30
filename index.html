@@ -5,10 +5,10 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
 <body>
-  <h1>Alice In Wonderland</h1>
-  <div class="content">
+  <h1>- Alice In Wonderland -</h1>
+
     <div id="vis"></div>
-  </div>
+
   <div class="tooltip"></div>
 
   <script type="text/javascript" src="vendor/d3.js" charset="utf-8"></script>
@@ -21,7 +21,7 @@ d3.csv('data/alice.csv', function(data) {
 
     //do aggregation
     data = data.reduce(function(prev, curr, currIndex, arr) {
-      
+
       var arrayIndex = Math.floor( currIndex / aggregation );
 
       // do we already have item for this agregation?
@@ -43,13 +43,13 @@ d3.csv('data/alice.csv', function(data) {
                                                     'width': x_num * unit });
     var min = d3.min(data, function(d) { return +d.len; });
     var max = d3.max(data, function(d) { return +d.len; });
-    
+
     var tooltip = d3.select(".tooltip");
 
     var scale = d3.scale.log();
     scale.domain([min, max]);
     scale.range(['#C8E9A0', '#172D2C']);
-    
+
     vis.selectAll('rect')
       .data(data).enter()
       .append('rect')
@@ -63,11 +63,11 @@ d3.csv('data/alice.csv', function(data) {
       .on("mouseover", function(d) {
         tooltip.text(d.sentence);
         tooltip.classed('displayed', true);
-        
+
         var boundingRect = this.getBoundingClientRect();
         var x = boundingRect.right;
         var y = (boundingRect.top + boundingRect.bottom) / 2;
-        
+
         x += 15;
         y -= tooltip.node().getBoundingClientRect().height/2; // center it
 
