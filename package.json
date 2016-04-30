@@ -1,21 +1,21 @@
 {
-  "name": "text-vis-starter",
+  "name": "alice",
   "version": "0.0.1",
-  "description": "Starting toolkit for interactive text visualization",
+  "description": "Text visualization of Alice In Wonderland",
   "main": "",
   "scripts": {
     "start": "./node_modules/.bin/http-server"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vlandham/text-vis-starter.git"
+    "url": "git+https://github.com/Shanfan/Alice"
   },
   "author": "Jim Vallandingham <jim@bocoup.com> (http://vallandingham.me/)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/vlandham/text-vis-starter/issues"
+    "url": "https://github.com/Shanfan/Alice/issues"
   },
-  "homepage": "https://github.com/vlandham/text-vis-starter#readme",
+  "homepage": "https://github.com/Shanfan/Alice#readme",
   "devDependencies": {
     "http-server": "^0.8.5"
   }
